@@ -1,0 +1,52 @@
+#!/bin/bash
+# Обновление системы
+echo -e "\033[1;36m"
+echo -e "███████╗░█████╗░████████╗████████╗██╗░░░██╗░█████╗░"
+echo -e "██╔════╝██╔══██╗╚══██╔══╝╚══██╔══╝██║░░░██║██╔══██╗"
+echo -e "█████╗░░██║░░██║░░░██║░░░░░░██║░░░██║░░░██║███████║"
+echo -e "██╔══╝░░██║░░██║░░░██║░░░░░░██║░░░██║░░░██║██╔══██║"
+echo -e "██║░░░░░╚█████╔╝░░░██║░░░░░░██║░░░╚██████╔╝██║░░██║"
+echo -e "╚═╝░░░░░░╚════╝░░░░╚═╝░░░░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝"
+echo -e "\033[1;34m"
+
+echo
+echo -e "\033[1;32mTelegram community: \033[5;31mhttps://t.me/g7team_ru\033[0m"
+echo -e "\033[0m"
+echo "Обновление списка пакетов и установка обновлений..."
+sudo apt update -y && sudo apt upgrade -y
+
+# Установка необходимых пакетов
+echo "Установка необходимых пакетов..."
+PACKAGES=(
+  curl
+  git
+  jq
+  lz4
+  build-essential
+  unzip
+  make
+  gcc
+  ncdu
+  cmake
+  clang
+  pkg-config
+  libssl-dev
+  python3-pip
+  protobuf-compiler
+  docker.io
+  dos2unix
+  screen
+)
+
+for PACKAGE in "${PACKAGES[@]}"; do
+  echo "Установка $PACKAGE..."
+  sudo apt install -y "$PACKAGE"
+  if [ $? -eq 0 ]; then
+    echo "$PACKAGE успешно установлен."
+  else
+    echo "Ошибка при установке $PACKAGE. Пропускаем..."
+  fi
+done
+
+# Печать завершения процесса
+echo "Начальная настройка сервера завершена."
