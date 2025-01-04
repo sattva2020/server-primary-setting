@@ -36,6 +36,7 @@ PACKAGES=(
   docker.io
   dos2unix
   screen
+  mc
 )
 
 for PACKAGE in "${PACKAGES[@]}"; do
