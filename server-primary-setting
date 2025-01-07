@@ -43,7 +43,9 @@ for PACKAGE in "${PACKAGES[@]}"; do
     echo "Установка Docker..."
     curl -fsSL https://get.docker.com | bash -s docker
     if [ $? -eq 0 ]; then
-      echo "Docker успешно установлен."
+      sudo systemctl start docker
+      sudo systemctl enable docker.service
+      echo "Docker успешно установлен и запущен."
     else
       echo "Ошибка при установке Docker. Пропускаем..."
     fi
