@@ -39,12 +39,22 @@ PACKAGES=(
 )
 
 for PACKAGE in "${PACKAGES[@]}"; do
-  echo "Установка $PACKAGE..."
-  sudo apt install -y "$PACKAGE"
-  if [ $? -eq 0 ]; then
-    echo "$PACKAGE успешно установлен."
+  if [ "$PACKAGE" == "docker.io" ]; then
+    echo "Установка Docker..."
+    curl -fsSL https://get.docker.com | bash -s docker
+    if [ $? -eq 0 ]; then
+      echo "Docker успешно установлен."
+    else
+      echo "Ошибка при установке Docker. Пропускаем..."
+    fi
   else
-    echo "Ошибка при установке $PACKAGE. Пропускаем..."
+    echo "Установка $PACKAGE..."
+    sudo apt install -y "$PACKAGE"
+    if [ $? -eq 0 ]; then
+      echo "$PACKAGE успешно установлен."
+    else
+      echo "Ошибка при установке $PACKAGE. Пропускаем..."
+    fi
   fi
 done
 
