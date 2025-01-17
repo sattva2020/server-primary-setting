@@ -14,6 +14,15 @@ echo -e "\033[0m"
 echo "Обновление списка пакетов и установка обновлений..."
 sudo apt update -y && sudo apt upgrade -y
 
+# Установка часового пояса
+echo "Установка часового пояса..."
+sudo timedatectl set-timezone Europe/Kyiv
+
+# Установка и настройка синхронизации времени
+echo "Установка и настройка синхронизации времени..."
+sudo apt install -y systemd-timesyncd
+sudo timedatectl set-ntp true
+
 # Установка необходимых пакетов
 echo "Установка необходимых пакетов..."
 PACKAGES=(
@@ -39,24 +48,12 @@ PACKAGES=(
 )
 
 for PACKAGE in "${PACKAGES[@]}"; do
-  if [ "$PACKAGE" == "docker.io" ]; then
-    echo "Установка Docker..."
-    curl -fsSL https://get.docker.com | bash -s docker
-    if [ $? -eq 0 ]; then
-      sudo systemctl start docker
-      sudo systemctl enable docker.service
-      echo "Docker успешно установлен и запущен."
-    else
-      echo "Ошибка при установке Docker. Пропускаем..."
-    fi
+  echo "Установка $PACKAGE..."
+  sudo apt install -y "$PACKAGE"
+  if [ $? -eq 0 ]; then
+    echo "$PACKAGE успешно установлен."
   else
-    echo "Установка $PACKAGE..."
-    sudo apt install -y "$PACKAGE"
-    if [ $? -eq 0 ]; then
-      echo "$PACKAGE успешно установлен."
-    else
-      echo "Ошибка при установке $PACKAGE. Пропускаем..."
-    fi
+    echo "Ошибка при установке $PACKAGE. Пропускаем..."
   fi
 done
 
