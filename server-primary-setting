@@ -41,7 +41,9 @@ PACKAGES=(
   libssl-dev
   python3-pip
   protobuf-compiler
-  docker.io
+  docker-ce
+  docker-ce-cli
+  containerd.io
   dos2unix
   screen
   mc
