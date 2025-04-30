@@ -44,6 +44,7 @@ PACKAGES=(
   docker-ce
   docker-ce-cli
   containerd.io
+  docker-compose-plugin
   dos2unix
   screen
   mc
